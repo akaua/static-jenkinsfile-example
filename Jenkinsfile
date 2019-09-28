@@ -9,11 +9,11 @@ pipeline {
     }
     stages {
 
-        stage('Build') {
+        stage('Upload to AWS') {
             steps {
-                sh '''#!/bin/bash
-                 echo "hello"
-                '''
+                withAWS(region:'eu-west-2',credentials:'aws-static') {
+                    s3Upload(file:'index.html', bucket:'akaua-static-udacity', path:'/')
+                }
             }
         }
     }
